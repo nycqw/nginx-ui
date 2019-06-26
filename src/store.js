@@ -4,13 +4,23 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
+    state: {
+        openedNavList: [],
+    },
 
-  },
-  mutations: {
+    getters: {
+        getOpenedNavList: function (state) {
+            return state.openedNavList
+        },
+    },
 
-  },
-  actions: {
+    mutations: {
+        setOpenedNavList(state, data) {
+            state.openedNavList = data;
+        },
+    },
 
-  }
+    actions: {
+        commitOpenedNavList: ({commit},openedNavList)=>commit('setOpenedNavList',openedNavList),
+    }
 })
