@@ -1,9 +1,9 @@
 <template>
     <div>
         <el-card class="box-card">
-            <el-form label-width="85px" inline=true :model="serverDetail" size="mini">
+            <el-form label-width="85px" :inline="inline" :model="serverDetail" size="mini">
                 <el-card class="box-card" style="margin-bottom: 10px">
-                    <el-form-item label="监听配置：">
+                    <el-form-item label="监听配置:">
                         <el-input v-model="serverDetail.name" placeholder="域名/IP" style="width: 300px;"></el-input>
                     </el-form-item>
                     <el-form-item label="">
@@ -38,7 +38,7 @@
                 </el-card>
 
                 <el-card class="box-card" v-for="(location, index) in serverDetail.locations">
-                    <el-form-item label="映射配置：">
+                    <el-form-item label="映射配置:">
                         <el-input v-model="location.path" placeholder=""
                                   style="width: 300px;"></el-input>
                     </el-form-item>
@@ -95,7 +95,7 @@
         },
         data() {
             return {
-                activeName: 0,
+                inline: true,
                 serverList: [
                     {
                         name: '',
@@ -175,15 +175,20 @@
                 this.$http.post(url, this.serverDetail).then(response => {
                     this.$message.info("success")
                 })
+            },
+            deleteServer() {
+                let url = BASE_PATH + "/server/delete"
+                this.$http.post(url, this.serverDetail).then(response => {
+                    this.$message.info("success")
+                })
             }
-
         }
     }
 
 
 </script>
 
-<style scoped>
+<style lang="scss">
     .el-form-item {
         margin-bottom: 10px;
     }
