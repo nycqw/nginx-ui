@@ -5,14 +5,12 @@
 </template>
 
 <script>
-    import HelloWorld from './components/HelloWorld.vue'
     import MainFrame from './components/MainFrame.vue'
 
     export default {
         name: 'app',
         components: {
-            MainFrame,
-            HelloWorld
+            MainFrame
         }
     }
 </script>
