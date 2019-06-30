@@ -41,11 +41,29 @@
                     {
                         entity: {
                             id: 0,
-                            name: "/nginx",
+                            name: "nginx",
                             icon: "el-icon-message",
                             alias: "Nginx 配置",
-                            path: "/nginx"
-                        }
+                        },
+                        childs: [
+                            {
+                                entity: {
+                                    id: 1,
+                                    name: "serverManage",
+                                    icon: "el-icon-message",
+                                    alias: "监听管理",
+                                    path: "/serverManage"
+                                }
+                            },
+                            {
+                                entity: {
+                                    id: 2,
+                                    name: "upstreamManage",
+                                    icon: "el-icon-bell",
+                                    alias: "负载管理",
+                                    path: "/upstreamManage"
+                                }
+                            }]
                     },
                 ]
             }
@@ -60,7 +78,7 @@
     }
 
     function searchMenu(menuData, key) {
-        for (let i=0; i<menuData.length; i++) {
+        for (let i = 0; i < menuData.length; i++) {
             let item = menuData[i]
             if (item.entity.path == null) {
                 return searchMenu(item.childs, key)

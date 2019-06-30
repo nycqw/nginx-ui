@@ -173,13 +173,30 @@
             updateServerInfo() {
                 let url = BASE_PATH + "/server/save"
                 this.$http.post(url, this.serverDetail).then(response => {
-                    this.$message.info("success")
+                    if (response.body.code == 1) {
+                        this.$message({
+                            type: 'success',
+                            center: true,
+                            message: "保存成功！"
+                        });
+                    } else {
+                        this.$message({
+                            type: 'error',
+                            center: true,
+                            message: response.body.message
+                        });
+                    }
+
                 })
             },
             deleteServer() {
                 let url = BASE_PATH + "/server/delete"
                 this.$http.post(url, this.serverDetail).then(response => {
-                    this.$message.info("success")
+                    this.$message({
+                        type: 'info',
+                        center: true,
+                        message: response.body.message
+                    });
                 })
             }
         }
