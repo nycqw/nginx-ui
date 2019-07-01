@@ -48,7 +48,8 @@
                                         <i class="el-icon-plus" style="width: 20px; cursor: pointer;"
                                            @click="addServerAddress(scope.row)"
                                            v-if="index == scope.row.serverAddressList.length-1"></i>
-                                        <div style="width: 20px;" v-if="index != scope.row.serverAddressList.length-1"></div>
+                                        <div style="width: 20px;"
+                                             v-if="index != scope.row.serverAddressList.length-1"></div>
                                     </el-form-item>
                                 </div>
                             </el-form>
@@ -187,7 +188,7 @@
                     });
                 });
             },
-            expandSelect (row, expandedRows) {
+            expandSelect(row, expandedRows) {
                 var that = this
                 if (expandedRows.length) {
                     that.expands = []

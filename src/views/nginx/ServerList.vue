@@ -118,19 +118,21 @@
 
 <script>
 
-    import ServerDetail from "./ServerDetail";
-
     const BASE_PATH = 'http://127.0.0.1:8889'
 
     export default {
         name: "ServerList",
-        components: {ServerDetail},
         created() {
             this.fetchServerList()
         },
         data() {
             return {
+                expands: [],
+                getRowKeys(row) {
+                    return row.id
+                },
                 inline: true,
+                dialogVisible: false,
                 serverList: [
                     {
                         name: '',
@@ -182,13 +184,12 @@
                     that.expands = []
                 }
             },
-            editServer() {
-                this.$refs.serverDetail.updateServerInfo()
-            },
             fetchServerList() {
                 let url = BASE_PATH + "/server/list"
                 this.$http.get(url).then(response => {
-                    this.serverList = response.body
+                    if (response.body.code == 1) {
+                        this.serverList = response.body.data
+                    }
                 })
             },
             addServer() {
@@ -212,7 +213,19 @@
             saveServer(data) {
                 let url = BASE_PATH + "/server/save"
                 this.$http.post(url, data).then(response => {
-                    this.$message.info("success")
+                    if (response.body.code == 1) {
+                        this.$message({
+                            type: 'success',
+                            center: true,
+                            message: "保存成功！"
+                        });
+                    } else {
+                        this.$message({
+                            type: 'error',
+                            center: true,
+                            message: response.body.message
+                        });
+                    }
                 })
             },
             deleteServer(data, index) {
@@ -221,13 +234,22 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.serverList.splice(index, 1)
                     let url = BASE_PATH + "/server/delete"
                     this.$http.post(url, data).then(response => {
-                        this.$message({
-                            type: 'success',
-                            message: '删除成功!'
-                        });
+                        if (response.body.code == 1) {
+                            this.serverList.splice(index, 1)
+                            this.$message({
+                                type: 'success',
+                                center: true,
+                                message: "删除成功！"
+                            });
+                        } else {
+                            this.$message({
+                                type: 'error',
+                                center: true,
+                                message: response.body.message
+                            });
+                        }
                     })
                 }).catch(() => {
                     this.$message({
