@@ -2,11 +2,12 @@
     <div>
         <el-card class="box-card">
             <div>
-                <el-button @click="addServer" type="primary" icon="el-icon-plus" size="mini"
-                           style="float: left; margin-bottom: 10px;">新增
-                </el-button>
+                <el-button @click="addServer" type="primary" icon="el-icon-plus" size="mini" style="float: left; margin-bottom: 10px;">新增</el-button>
             </div>
-            <el-table :data="serverList" style="width: 100%" highlight-current-row
+            <el-table :data="serverList" style="width: 100%" highlight-current-row @expand-change="expandSelect"
+                      type='index'
+                      :row-key='getRowKeys'
+                      :expand-row-keys="expands"
                       :header-cell-style="{background: '#ecf5ff'}" size="small">
                 <el-table-column type="expand">
                     <template slot-scope="scope">
@@ -108,6 +109,10 @@
                 </el-table-column>
             </el-table>
         </el-card>
+
+        <el-dialog title="负载列表" :visible.sync="dialogVisible">
+            <upstream-list></upstream-list>
+        </el-dialog>
     </div>
 </template>
 
@@ -166,6 +171,20 @@
             }
         },
         methods: {
+            expandSelect (row, expandedRows) {
+                var that = this
+                if (expandedRows.length) {
+                    that.expands = []
+                    if (row) {
+                        that.expands.push(row.id)
+                    }
+                } else {
+                    that.expands = []
+                }
+            },
+            editServer() {
+                this.$refs.serverDetail.updateServerInfo()
+            },
             fetchServerList() {
                 let url = BASE_PATH + "/server/list"
                 this.$http.get(url).then(response => {
