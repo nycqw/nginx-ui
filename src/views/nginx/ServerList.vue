@@ -79,7 +79,7 @@
                                         </el-form-item>
                                         <el-form-item prop="attrValue">
                                             <el-input v-model="attr.value" placeholder="属性值"
-                                                      style="width: 400px;"></el-input>
+                                                      style="width: 400px;" @focus="openUpstreamDialog(attr.name)"></el-input>
                                         </el-form-item>
                                         <el-form-item>
                                             <i class="el-icon-delete" style="width: 20px; cursor: pointer;"
@@ -110,7 +110,7 @@
             </el-table>
         </el-card>
 
-        <el-dialog title="负载列表" :visible.sync="dialogVisible">
+        <el-dialog title="负载列表" :visible.sync="dialogVisible" width="900px">
             <upstream-list></upstream-list>
         </el-dialog>
     </div>
@@ -118,10 +118,12 @@
 
 <script>
 
+    import UpstreamList from "./UpstreamList";
     const BASE_PATH = 'http://127.0.0.1:8889'
 
     export default {
         name: "ServerList",
+        components: {UpstreamList},
         created() {
             this.fetchServerList()
         },
@@ -173,6 +175,11 @@
             }
         },
         methods: {
+            openUpstreamDialog(name) {
+                if (name == 'proxy_pass') {
+                    this.dialogVisible = true
+                }
+            },
             expandSelect (row, expandedRows) {
                 var that = this
                 if (expandedRows.length) {

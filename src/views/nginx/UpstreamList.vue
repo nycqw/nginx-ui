@@ -13,6 +13,11 @@
                       :row-key='getRowKeys'
                       :expand-row-keys="expands"
                       highlight-current-row :header-cell-style="{background: '#ecf5ff'}" size="small">
+                <el-table-column label=" " width="30">
+                    <template scope="scope">
+                        <el-radio :label="scope.row.id" v-model="upstreamRadio" @change.native="getSelectedUpstream(scope.row.name)">&nbsp</el-radio>
+                    </template>
+                </el-table-column>
                 <el-table-column type="expand">
                     <template slot-scope="scope">
                         <el-card class="box-card">
@@ -92,6 +97,8 @@
                 }],
                 inline: true,
                 expands: [],
+                selectedUpstream: '',
+                upstreamRadio: 1,
                 getRowKeys(row) {
                     return row.id
                 },
@@ -101,6 +108,9 @@
             this.fetchUpstreamList()
         },
         methods: {
+            getSelectedUpstream(name) {
+                this.selectedUpstream = name
+            },
             addUpstream() {
                 let upstream = {
                     id: this.upstreamList.length + 1,
