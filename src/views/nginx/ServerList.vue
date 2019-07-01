@@ -111,7 +111,7 @@
         </el-card>
 
         <el-dialog title="负载列表" :visible.sync="dialogVisible" width="900px">
-            <upstream-list></upstream-list>
+            <upstream-list ref="UpstreamList" :dialog-visible="dialogVisible" @listenSelectedEvent="listenSelectedUpstream"></upstream-list>
         </el-dialog>
     </div>
 </template>
@@ -129,6 +129,7 @@
         },
         data() {
             return {
+                selectedUpstream: '',
                 expands: [],
                 getRowKeys(row) {
                     return row.id
@@ -175,6 +176,9 @@
             }
         },
         methods: {
+            listenSelectedUpstream(selectedUpstream) {
+              this.selectedUpstream = selectedUpstream
+            },
             openUpstreamDialog(name) {
                 if (name == 'proxy_pass') {
                     this.dialogVisible = true

@@ -15,7 +15,9 @@
                       highlight-current-row :header-cell-style="{background: '#ecf5ff'}" size="small">
                 <el-table-column label=" " width="30">
                     <template scope="scope">
-                        <el-radio :label="scope.row.id" v-model="upstreamRadio" @change.native="getSelectedUpstream(scope.row.name)">&nbsp</el-radio>
+                        <el-radio :label="scope.row.id" v-model="upstreamRadio"
+                                  @change.native="getSelectedUpstream(scope.row.name)">&nbsp
+                        </el-radio>
                     </template>
                 </el-table-column>
                 <el-table-column type="expand">
@@ -72,8 +74,12 @@
                     </template>
                 </el-table-column>
             </el-table>
-        </el-card>
 
+            <div style=" margin-top:10px; " v-show="dialogVisible">
+                <el-button @click="confirmDialog" type="primary" size="mini"> 确定 </el-button>
+                <el-button @click="closeDialog" type="primary" size="mini"> 取消 </el-button>
+            </div>
+        </el-card>
 
     </div>
 
@@ -104,10 +110,21 @@
                 },
             }
         },
+        props: {
+            dialogVisible: {
+                type: Boolean
+            }
+        },
         created() {
             this.fetchUpstreamList()
         },
         methods: {
+            closeDialog() {
+                this.dialogVisible = false
+            },
+            confirmDialog() {
+                this.$emit("listenSelectedEvent", this.selectedUpstream)
+            },
             getSelectedUpstream(name) {
                 this.selectedUpstream = name
             },
