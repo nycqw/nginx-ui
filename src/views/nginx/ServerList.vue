@@ -112,6 +112,10 @@
 
         <el-dialog title="负载列表" :visible.sync="dialogVisible" width="900px">
             <upstream-list ref="UpstreamList" :dialog-visible="dialogVisible" @listenSelectedEvent="listenSelectedUpstream"></upstream-list>
+            <div style=" margin-top:10px; " v-show="dialogVisible">
+                <el-button @click="confirmDialog" type="primary" size="mini"> 确定 </el-button>
+                <el-button @click="closeDialog" type="primary" size="mini"> 取消 </el-button>
+            </div>
         </el-dialog>
     </div>
 </template>
@@ -176,6 +180,12 @@
             }
         },
         methods: {
+            closeDialog() {
+                this.dialogVisible = false
+            },
+            confirmDialog() {
+
+            },
             listenSelectedUpstream(selectedUpstream) {
               this.selectedUpstream = selectedUpstream
             },
