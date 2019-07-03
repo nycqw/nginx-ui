@@ -116,6 +116,9 @@
             this.fetchUpstreamList()
         },
         methods: {
+            chooseUpstream() {
+                this.$emit("listenSelectedEvent", this.selectedUpstream)
+            },
             getSelectedUpstream(name) {
                 this.selectedUpstream = name
             },

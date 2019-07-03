@@ -2,7 +2,9 @@
     <div>
         <el-card class="box-card">
             <div>
-                <el-button @click="addServer" type="primary" icon="el-icon-plus" size="mini" style="float: left; margin-bottom: 10px;">新增</el-button>
+                <el-button @click="addServer" type="primary" icon="el-icon-plus" size="mini"
+                           style="float: left; margin-bottom: 10px;">新增
+                </el-button>
             </div>
             <el-table :data="serverList" style="width: 100%" highlight-current-row @expand-change="expandSelect"
                       type='index'
@@ -12,7 +14,8 @@
                 <el-table-column type="expand">
                     <template slot-scope="scope">
                         <el-card class="box-card">
-                            <el-form ref="serverForm" label-width="85px" :inline="inline" :model="scope.row" size="mini">
+                            <el-form ref="serverForm" label-width="85px" :inline="inline" :model="scope.row"
+                                     size="mini">
                                 <el-card class="box-card" style="margin-bottom: 10px">
                                     <el-form-item label="监听配置:" prop="domain">
                                         <el-input v-model="scope.row.name" placeholder="域名/IP"
@@ -79,7 +82,8 @@
                                         </el-form-item>
                                         <el-form-item prop="attrValue">
                                             <el-input v-model="attr.value" placeholder="属性值"
-                                                      style="width: 400px;" @focus="openUpstreamDialog(attr.name)"></el-input>
+                                                      style="width: 400px;"
+                                                      @focus="openUpstreamDialog(attr)"></el-input>
                                         </el-form-item>
                                         <el-form-item>
                                             <i class="el-icon-delete" style="width: 20px; cursor: pointer;"
@@ -111,10 +115,12 @@
         </el-card>
 
         <el-dialog title="负载列表" :visible.sync="dialogVisible" width="900px">
-            <upstream-list ref="UpstreamList" :dialog-visible="dialogVisible" @listenSelectedEvent="listenSelectedUpstream"></upstream-list>
+            <upstream-list ref="UpstreamList" :dialog-visible="dialogVisible"
+                           @listenSelectedEvent="listenSelectedUpstream">
+            </upstream-list>
             <div style=" margin-top:10px; " v-show="dialogVisible">
-                <el-button @click="confirmDialog" type="primary" size="mini"> 确定 </el-button>
-                <el-button @click="closeDialog" type="primary" size="mini"> 取消 </el-button>
+                <el-button @click="confirmDialog" type="primary" size="mini"> 确定</el-button>
+                <el-button @click="closeDialog" type="primary" size="mini"> 取消</el-button>
             </div>
         </el-dialog>
     </div>
@@ -123,6 +129,7 @@
 <script>
 
     import UpstreamList from "./UpstreamList";
+
     const BASE_PATH = 'http://127.0.0.1:8889'
 
     export default {
@@ -184,17 +191,18 @@
                 this.dialogVisible = false
             },
             confirmDialog() {
-
+                this.$refs.UpstreamList.chooseUpstream()
             },
             listenSelectedUpstream(selectedUpstream) {
-              this.selectedUpstream = selectedUpstream
+                this.selectedUpstream = selectedUpstream;
+                this.dialogVisible = false
             },
-            openUpstreamDialog(name) {
-                if (name == 'proxy_pass') {
+            openUpstreamDialog(attr) {
+                if (attr.name == 'proxy_pass') {
                     this.dialogVisible = true
                 }
             },
-            expandSelect (row, expandedRows) {
+            expandSelect(row, expandedRows) {
                 var that = this
                 if (expandedRows.length) {
                     that.expands = []
