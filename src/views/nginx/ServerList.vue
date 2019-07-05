@@ -101,6 +101,7 @@
                         </el-card>
                     </template>
                 </el-table-column>
+                <el-table-column align="center" prop="ip" label="服务器"></el-table-column>
                 <el-table-column align="center" prop="name" label="域名"></el-table-column>
                 <el-table-column align="center" prop="port" label="端口"></el-table-column>
                 <el-table-column align="center" fixed="right" label="操作" width="300">
@@ -149,6 +150,7 @@
                 dialogVisible: false,
                 serverList: [
                     {
+                        ip: '',
                         name: '',
                         port: '',
                         params: [{
