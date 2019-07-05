@@ -7,7 +7,12 @@
                     :label="item.title"
                     :name="item.name"
             >
-                <router-view></router-view>
+                <section>
+                    <keep-alive>
+                        <router-view v-if="isCached"></router-view>
+                    </keep-alive>
+                    <router-view v-if="!isCached"></router-view>
+                </section>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -28,6 +33,11 @@
         },
         created() {
         },
+        computed: {
+            isCached() {
+                return typeof this.$route.meta.noCache === 'undefined' || this.$route.meta.noCache === false
+            }
+        },
         methods: {
             addTab(activeNav) {
                 if (this.isNotOpened(activeNav)) {
@@ -39,6 +49,7 @@
                 }
                 this.activeName = activeNav.name;
                 this.$router.push(this.activeName)
+                console.log("add tab")
             },
             isNotOpened(activeNav) {
                 let result = true;
@@ -67,8 +78,10 @@
                 this.activeName = activeName;
                 this.openedNavList = tabs.filter(tab => tab.name !== targetName);
                 this.$router.push(this.activeName)
+                console.log("remove tab")
             },
             handleClick(tab, event) {
+                console.log("tab click")
                 this.$router.push(tab.name)
             }
         }

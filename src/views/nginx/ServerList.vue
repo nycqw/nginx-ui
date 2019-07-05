@@ -215,9 +215,15 @@
             },
             fetchServerList() {
                 let url = BASE_PATH + "/server/list"
-                this.$http.get(url).then(response => {
+                this.$http.get(url, {params: {ip: '127.0.0.1'}}).then(response => {
                     if (response.body.code == 1) {
                         this.serverList = response.body.data
+                    } else {
+                        this.$message({
+                            type: 'error',
+                            center: true,
+                            message: response.body.message
+                        });
                     }
                 })
             },
