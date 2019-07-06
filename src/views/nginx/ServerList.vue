@@ -102,6 +102,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column align="center" prop="ip" label="服务器"></el-table-column>
+                <el-table-column align="center" prop="path" label="路径"></el-table-column>
                 <el-table-column align="center" prop="name" label="域名"></el-table-column>
                 <el-table-column align="center" prop="port" label="端口"></el-table-column>
                 <el-table-column align="center" fixed="right" label="操作" width="300">
@@ -153,6 +154,7 @@
                         ip: '',
                         name: '',
                         port: '',
+                        path: '',
                         params: [{
                             name: '',
                             value: ''
